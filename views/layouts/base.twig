@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>{% block title %}My App{% endblock %}</title>
+    <title>{% block title %}{{ env('APP_NAME', 'My App') }}{% endblock %}</title>
 </head>
 <body>
     <header>

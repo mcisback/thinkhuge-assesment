@@ -8,10 +8,6 @@ use Symfony\Component\Routing\Matcher\UrlMatcher;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
-use Twig\Environment;
-use Twig\Loader\FilesystemLoader;
-use Twig\TwigFunction;
-
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
@@ -20,7 +16,7 @@ if (env('APP_DEBUG') === true) {
     error_reporting(E_ALL);
 }
 
-require_once __DIR__ . '/twig.php';
+$twig = require_once __DIR__ . '/twig.php';
 
 $request = Request::createFromGlobals();
 
@@ -44,7 +40,9 @@ try {
     // print_r($request->getPathInfo());
     // echo "\n";
 
-    $parameters = $matcher->match($request->getPathInfo());
+    $parameters = $matcher->match(
+        $request->getPathInfo()
+    );
 
     // print_r($parameters);
 
