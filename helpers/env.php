@@ -9,7 +9,7 @@
  */
 function env(string $key, mixed $default = null): mixed
 {
-    $value = $_ENV[$key] ?? $_SERVER[$key] ?? getenv($key);
+    $value = $_ENV[$key] ?? getenv($key);
 
     if ($value === false || $value === null) {
         return $default;

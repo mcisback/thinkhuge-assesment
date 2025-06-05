@@ -18,9 +18,16 @@ $twig = new Environment(
     ]
 );
 
-// Assuming you already have $twig set up:
 $twig->addFunction(new TwigFunction('env', function ($key, $default = null) {
-    return env($key, $default); // your helper
+    return env($key, $default);
+}));
+
+$twig->addFunction(new TwigFunction('config', function ($key, $default = null) {
+    return config($key, $default);
+}));
+
+$twig->addFunction(new TwigFunction('assets', function ($path) {
+    return rtrim(config('app.assets') ?? '', '/') . '/' . ltrim($path, '/');
 }));
 
 return $twig;

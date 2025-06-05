@@ -6,7 +6,7 @@
             "App\\": "app/"
         },
         "files": [
-            "helpers/env.php"
+            "helpers/helpers.php"
         ]
     },
     "authors": [
