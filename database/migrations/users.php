@@ -12,7 +12,8 @@ DB::schema()->create('users', function ($table) {
 
        $table->string('name');
 
-       $table->string('role')->default('user');
+       // client|admin
+       $table->string('role')->default('client');
 
        $table->string('email')->unique();
 

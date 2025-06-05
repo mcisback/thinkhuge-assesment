@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 use App\Controllers\BaseController;
+use App\Models\User;
 
 class DashboardController extends BaseController {
     public function index(Request $request): Response
@@ -32,6 +33,10 @@ class DashboardController extends BaseController {
             return new RedirectResponse('/');
         }
 
-        return $this->render('dashboard.clients', []);
+        $clients = User::where('role', 'client')->get();
+
+        return $this->render('dashboard.clients', [
+            'clients' => $clients,
+        ]);
     }
 }
