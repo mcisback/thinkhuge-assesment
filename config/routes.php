@@ -6,6 +6,9 @@ $routes = new RouteCollection();
 
 // Load web routes
 $webRoutes = require __DIR__ . '/routes/web/routes.php';
+$webRoutes->addDefaults([
+    '_format' => 'html'
+]);
 $routes->addCollection($webRoutes);
 
 // Load API routes with /api prefix

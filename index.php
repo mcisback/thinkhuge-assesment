@@ -36,7 +36,9 @@ try {
     // Extract the controller and run it
     [$controllerClass, $method] = $parameters['_controller'];
 
-    unset($parameters['_controller'], $parameters['_route']); // cleanup
+    $requestFormat = $parameters['_format'];
+
+    unset($parameters['_controller'], $parameters['_route'], $parameters['_format']); // cleanup
 
     // print_r([$controllerClass, $method]);
 
@@ -44,7 +46,7 @@ try {
     $response = $controller->$method($request, ...array_values($parameters));
 } catch (Symfony\Component\Routing\Exception\ResourceNotFoundException $e) {
     // Check if the URL starts with /api
-    if (str_starts_with($request->getPathInfo(), '/api')) {
+    if ($requestFormat === 'json') {
         $response = new JsonResponse([
             'error' => 'Not Found',
             'status' => 404,
@@ -54,7 +56,7 @@ try {
     }
 
 } catch (Symfony\Component\Routing\Exception\MethodNotAllowedException $e) {
-    if (str_starts_with($request->getPathInfo(), '/api')) {
+    if ($requestFormat === 'json') {
         $response = new JsonResponse([
             'error' => 'Method Not Allowed',
             'allowed_methods' => $e->getAllowedMethods(),
@@ -65,7 +67,7 @@ try {
     }
 
 } catch (Throwable $e) {
-    if (str_starts_with($request->getPathInfo(), '/api')) {
+    if ($requestFormat === 'json') {
         $response = new JsonResponse([
             'error' => 'Internal Server Error',
             'message' => $e->getMessage(),
