@@ -8,6 +8,18 @@ use Symfony\Component\Routing\Matcher\UrlMatcher;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
+use Twig\Environment;
+use Twig\Loader\FilesystemLoader;
+
+// Set up Twig
+$twig = new Environment(
+    new FilesystemLoader(__DIR__ . '/views'),
+    [
+        'cache' => false,
+        // 'cache' => __DIR__ . '/cache/twig' // for production
+    ]
+);
+
 $request = Request::createFromGlobals();
 
 // Load the route collection
@@ -36,13 +48,13 @@ try {
     // Extract the controller and run it
     [$controllerClass, $method] = $parameters['_controller'];
 
-    $requestFormat = $parameters['_format'];
+    $requestFormat = $parameters['_format'] ?? 'html';
 
     unset($parameters['_controller'], $parameters['_route'], $parameters['_format']); // cleanup
 
     // print_r([$controllerClass, $method]);
 
-    $controller = new $controllerClass();
+    $controller = new $controllerClass($twig);
     $response = $controller->$method($request, ...array_values($parameters));
 } catch (Symfony\Component\Routing\Exception\ResourceNotFoundException $e) {
     // Check if the URL starts with /api
