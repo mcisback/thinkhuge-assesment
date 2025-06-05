@@ -6,11 +6,17 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\RequestContext;
 use Symfony\Component\Routing\Matcher\UrlMatcher;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 $request = Request::createFromGlobals();
 
 // Load the route collection
 $routes = require __DIR__ . '/config/routes.php';
+
+// NOTE: Print all routes
+// foreach ($routes as $name => $route) {
+//     echo "$name: " . $route->getPath() . "\n";
+// }
 
 // Create context based on the current request
 $context = new RequestContext();
@@ -32,14 +38,42 @@ try {
 
     unset($parameters['_controller'], $parameters['_route']); // cleanup
 
-    print_r([$controllerClass, $method]);
+    // print_r([$controllerClass, $method]);
 
     $controller = new $controllerClass();
     $response = $controller->$method($request, ...array_values($parameters));
-} catch (Symfony\Component\Routing\Exception\ResourceNotFoundException) {
-    $response = new Response('404 Not Found', 404);
-} catch (Exception $e) {
-    $response = new Response('500 Internal Server Error: ' . $e->getMessage(), 500);
+} catch (Symfony\Component\Routing\Exception\ResourceNotFoundException $e) {
+    // Check if the URL starts with /api
+    if (str_starts_with($request->getPathInfo(), '/api')) {
+        $response = new JsonResponse([
+            'error' => 'Not Found',
+            'status' => 404,
+        ], 404);
+    } else {
+        $response = new Response('404 Not Found', 404);
+    }
+
+} catch (Symfony\Component\Routing\Exception\MethodNotAllowedException $e) {
+    if (str_starts_with($request->getPathInfo(), '/api')) {
+        $response = new JsonResponse([
+            'error' => 'Method Not Allowed',
+            'allowed_methods' => $e->getAllowedMethods(),
+            'status' => 405,
+        ], 405);
+    } else {
+        $response = new Response('405 Method Not Allowed', 405);
+    }
+
+} catch (Throwable $e) {
+    if (str_starts_with($request->getPathInfo(), '/api')) {
+        $response = new JsonResponse([
+            'error' => 'Internal Server Error',
+            'message' => $e->getMessage(),
+            'status' => 500,
+        ], 500);
+    } else {
+        $response = new Response('500 Internal Server Error: ' . $e->getMessage(), 500);
+    }
 }
 
 $response->send();

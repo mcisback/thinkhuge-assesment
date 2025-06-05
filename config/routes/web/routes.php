@@ -5,9 +5,9 @@ use Symfony\Component\Routing\RouteCollection;
 
 use App\Routing\GetRoute;
 
-$routes = new RouteCollection();
+$apiRoutes = new RouteCollection();
 
-$routes->add(
+$apiRoutes->add(
     'web_greet', 
     new GetRoute(
         '/greet/{name}',
@@ -17,4 +17,4 @@ $routes->add(
     )
 );
 
-return $routes;
+return $apiRoutes;

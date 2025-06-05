@@ -1,7 +1,7 @@
 <?php
 
 // src/Controllers/Api/ApiController.php
-namespace App\Controllers;
+namespace App\Controllers\Api;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,6 +16,5 @@ class ApiController extends BaseController {
             'message' => "Hello $name!",
             'success' => true
         ]);
-
     }
 }

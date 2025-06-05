@@ -1,7 +1,7 @@
 <?php
 
-// src/Controller/HomeController.php
-namespace App\Controllers;
+// src/Controller/Web/HomeController.php
+namespace App\Controllers\Web;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
