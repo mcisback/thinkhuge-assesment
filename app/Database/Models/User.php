@@ -10,6 +10,6 @@ class User extends Model {
     protected $hidden = ['password', 'remember_token'];
 
     public function movements() {
-        return $this->hasMany('Movement');
+        return $this->hasMany(App\Models\Movement::class);
     }
 }
