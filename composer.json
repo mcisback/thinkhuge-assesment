@@ -1,0 +1,19 @@
+{
+    "name": "markcaggiano/assesment-test",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Marco Caggiano",
+            "email": "mcisback@gmail.com"
+        }
+    ],
+    "require": {
+        "symfony/http-foundation": "^7.3",
+        "symfony/routing": "^7.3"
+    }
+}
