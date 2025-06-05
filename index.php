@@ -10,18 +10,17 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
+use Twig\TwigFunction;
 
-// Set up Twig
-$twigLoader = new \Twig\Loader\FilesystemLoader(__DIR__ . '/views');
-$twigLoader->addPath(__DIR__ . '/views/layouts');
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv->load();
 
-$twig = new Environment(
-    $twigLoader,
-    [
-        'cache' => false,
-        // 'cache' => __DIR__ . '/cache/twig' // for production
-    ]
-);
+if (env('APP_DEBUG') === true) {
+    ini_set('display_errors', 1);
+    error_reporting(E_ALL);
+}
+
+require_once __DIR__ . '/twig.php';
 
 $request = Request::createFromGlobals();
 
