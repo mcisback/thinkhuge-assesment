@@ -9,6 +9,10 @@ use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Routing\RouteCollection;
 use Symfony\Component\Routing\Route;
 
+require_once __DIR__ . '/../../../bootstrap/database.php';
+
+use Illuminate\Database\Capsule\Manager as DB;
+
 class DbMigrateCommand extends Command
 {
     private RouteCollection $routes;
@@ -27,6 +31,8 @@ class DbMigrateCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+
         try{
             foreach (glob( config('app.paths.migrations') . '/*.php' ) as $path) {
                 $migration = basename(dirname($path)) . '/' . basename($path);

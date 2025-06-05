@@ -2,12 +2,13 @@
 
 namespace App\Seeders;
 
-use App\Models\User;
+use App\Database\Models\User;
 
 class UserSeeder
 {
     public function run(): void
     {
+        
         User::truncate(); // Optional: clear table before seeding
 
         $password = password_hash('password', PASSWORD_ARGON2ID);

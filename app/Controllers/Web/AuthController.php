@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 use App\Controllers\BaseController;
-use App\Models\User;
+use App\Database\Models\User;
 
 class AuthController extends BaseController {
     public function login(Request $request): Response {

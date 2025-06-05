@@ -2,8 +2,8 @@
 
 namespace App\Seeders;
 
-use App\Models\Movement;
-use App\Models\User;
+use App\Database\Models\Movement;
+use App\Database\Models\User;
 
 class MovementSeeder
 {
@@ -11,17 +11,18 @@ class MovementSeeder
     {
         Movement::truncate(); // Optional: clear table before seeding
 
-        $users = User::all();
+        $users = User::clients();
 
         foreach ($users as $user) {
-            print_r($user->name);
+            echo "[+] Seeding movement for {$user->name}\n";
 
             Movement::create([
                 'type' => 'deposit',
-                'amount' => 200000,
-            ])->associate($user);
+                'amount' => 2000*100,
+                'user_id' => $user->id,
+            ]);
         }
 
-        echo "✅ Seeded users table.\n";
+        echo "✅ Seeded movements table.\n";
     }
 }
