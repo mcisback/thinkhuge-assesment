@@ -16,6 +16,8 @@ class HomeController extends BaseController {
             return new RedirectResponse('/dashboard');
         }
 
+        // print_r('HERE');
+
         return $this->render('home.index');
     }
 }

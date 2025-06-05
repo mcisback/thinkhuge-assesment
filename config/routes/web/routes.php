@@ -8,6 +8,7 @@ use App\Routing\PostRoute;
 
 $webRoutes = new RouteCollection();
 
+// Home
 $webRoutes->add(
     'web.home', 
     new GetRoute(
@@ -18,6 +19,7 @@ $webRoutes->add(
     )
 );
 
+// Dashboard
 $webRoutes->add(
     'web.dashboard', 
     new GetRoute(
@@ -28,6 +30,17 @@ $webRoutes->add(
     )
 );
 
+$webRoutes->add(
+    'web.dashboard.clients', 
+    new GetRoute(
+        '/dashboard/clients',
+        [
+            '_controller' => [App\Controllers\Web\DashboardController::class, 'clientsPage'],
+        ],
+    )
+);
+
+// Auth
 $webRoutes->add(
     'web.login', 
     new PostRoute(

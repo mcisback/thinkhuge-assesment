@@ -8,7 +8,7 @@ $routes = new RouteCollection();
 $webRoutes = require __DIR__ . '/routes/web/routes.php';
 $webRoutes->addDefaults([
     '_format' => 'html',
-    '_prefix' => '',
+    '_prefix' => '/',
 ]);
 $routes->addCollection($webRoutes);
 

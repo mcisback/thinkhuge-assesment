@@ -1,0 +1,30 @@
+{% extends 'base.twig' %}
+
+{% block title %}Dashboard | {{ parent() }}{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-3">
+            <nav class="nav flex-column bg-light p-3 rounded shadow-sm">
+                <a class="nav-link fw-bold" href="/dashboard">Dashboard</a>
+                <a class="nav-link" href="/dashboard/clients">Clients</a>
+                <a class="nav-link text-danger" href="/logout">Logout</a>
+            </nav>
+        </div>
+
+        <div class="col-md-9">
+            <h2 class="mb-4">Dashboard</h2>
+            <p>Welcome to your dashboard.</p>
+
+            <div class="card mb-4">
+                <div class="card-header bg-primary text-white">{% block contentTitle %}{% endblock %}</div>
+                <div class="card-body">
+                    {% block content %}{% endblock %}
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

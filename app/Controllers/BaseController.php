@@ -26,11 +26,13 @@ abstract class BaseController {
             $template .= '.twig';
         }
 
-        return new Response($this->twig->render($template, [
+        $response = $this->twig->render($template, [
             ...$params,
-            'flash' => session()->getFlashBag()->all(),
-            'old' => $this->request->request->all(),
-        ]));
+            'flash' => session()->getFlashBag()->all() ?? null,
+            'old' => $this->request->request->all() ?? [],
+        ]);
+
+        return new Response($response);
     }
 
     protected function json(array $data, int $status = 200): JsonResponse {

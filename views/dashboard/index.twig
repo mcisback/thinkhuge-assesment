@@ -1,63 +1,42 @@
-{% extends 'base.twig' %}
+{% extends 'dashboard.twig' %}
 
-{% block title %}Dashboard | {{ parent() }}{% endblock %}
+{% block contentTitle %}
+All Time Reports
+{% endblock %}
 
 {% block content %}
-<div class="container mt-4">
-    <div class="row">
-        <div class="col-md-3">
-            <nav class="nav flex-column bg-light p-3 rounded shadow-sm">
-                <a class="nav-link fw-bold" href="/dashboard">Dashboard</a>
-                <a class="nav-link" href="/users">Users</a>
-                <a class="nav-link text-danger" href="/logout">Logout</a>
-            </nav>
-        </div>
+<form method="GET" action="/dashboard#report" class="mb-3 row g-3">
+    <div class="col-md-5">
+        <label for="range" class="form-label">Range</label>
+        <select class="form-select" name="range" id="range">
+            <option value="all">All</option>
+            <option value="today">Today</option>
+            <option value="week">This Week</option>
+            <option value="month">This Month</option>
+        </select>
+    </div>
+    <div class="col-md-2 d-flex align-items-end">
+        <button class="btn btn-outline-primary w-100" type="submit">Apply</button>
+    </div>
+</form>
 
-        <div class="col-md-9">
-            <h2 class="mb-4">Dashboard</h2>
-            <p>Welcome to your dashboard.</p>
-
-            <div class="card mb-4">
-                <div class="card-header bg-primary text-white">All Time Report</div>
-                <div class="card-body">
-                    <form method="GET" action="/dashboard#report" class="mb-3 row g-3">
-                        <div class="col-md-5">
-                            <label for="range" class="form-label">Range</label>
-                            <select class="form-select" name="range" id="range">
-                                <option value="all">All</option>
-                                <option value="today">Today</option>
-                                <option value="week">This Week</option>
-                                <option value="month">This Month</option>
-                            </select>
-                        </div>
-                        <div class="col-md-2 d-flex align-items-end">
-                            <button class="btn btn-outline-primary w-100" type="submit">Apply</button>
-                        </div>
-                    </form>
-
-                    <div class="row">
-                        <div class="col-md-6">
-                            <h5>Balance</h5>
-                            <p class="fs-4 fw-bold text-success">€ {{ report.balance|default('0.00') }}</p>
-                        </div>
-                        <div class="col-md-6">
-                            <h5>Movements</h5>
-                            <ul class="list-group">
-                                {% for movement in report.movements %}
-                                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                                        {{ movement.label }}
-                                        <span class="badge bg-secondary">{{ movement.amount }} €</span>
-                                    </li>
-                                {% else %}
-                                    <li class="list-group-item">No movements found.</li>
-                                {% endfor %}
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
+<div class="row">
+    <div class="col-md-6">
+        <h5>Balance</h5>
+        <p class="fs-4 fw-bold text-success">€ {{ report.balance|default('0.00') }}</p>
+    </div>
+    <div class="col-md-6">
+        <h5>Movements</h5>
+        <ul class="list-group">
+            {% for movement in report.movements %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    {{ movement.label }}
+                    <span class="badge bg-secondary">{{ movement.amount }} €</span>
+                </li>
+            {% else %}
+                <li class="list-group-item">No movements found.</li>
+            {% endfor %}
+        </ul>
     </div>
 </div>
 {% endblock %}

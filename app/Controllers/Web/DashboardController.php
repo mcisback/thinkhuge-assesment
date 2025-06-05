@@ -26,4 +26,12 @@ class DashboardController extends BaseController {
             ]
         ]);
     }
+
+    public function clientsPage(Request $request) : Response {
+        if(!session()->get('auth')) {
+            return new RedirectResponse('/');
+        }
+
+        return $this->render('dashboard.clients', []);
+    }
 }
