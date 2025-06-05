@@ -1,14 +1,12 @@
 <?php
 
-require_once __DIR__ . '/vendor/autoload.php';
-
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 use Twig\TwigFunction;
 
 // Set up Twig
-$twigLoader = new \Twig\Loader\FilesystemLoader(__DIR__ . '/views');
-$twigLoader->addPath(__DIR__ . '/views/layouts');
+$twigLoader = new \Twig\Loader\FilesystemLoader(__DIR__ . '/../views');
+$twigLoader->addPath(__DIR__ . '/../views/layouts');
 
 $twig = new Environment(
     $twigLoader,
@@ -19,7 +17,7 @@ $twig = new Environment(
 );
 
 $twig->addFunction(new TwigFunction('env', function ($key, $default = null) {
-    return env($key, $default);
+    return _env($key, $default);
 }));
 
 $twig->addFunction(new TwigFunction('config', function ($key, $default = null) {

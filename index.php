@@ -8,15 +8,17 @@ use Symfony\Component\Routing\Matcher\UrlMatcher;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
-$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
-$dotenv->load();
+require_once __DIR__ . '/bootstrap/dotenv.php';
 
-if (env('APP_DEBUG') === true) {
+if (_env('APP_DEBUG') === true) {
     ini_set('display_errors', 1);
     error_reporting(E_ALL);
 }
 
-$twig = require_once __DIR__ . '/twig.php';
+// Bootstrap ORM
+require_once __DIR__ . '/bootstrap/database.php';
+
+$twig = require_once __DIR__ . '/bootstrap/twig.php';
 
 $request = Request::createFromGlobals();
 
