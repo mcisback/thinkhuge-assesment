@@ -17,6 +17,9 @@ abstract class BaseController {
     }
 
     protected function render(string $template, array $params = []): Response {
+        $template = str_replace('.', '/', $template);
+        $template .= '.twig';
+
         return new Response($this->twig->render($template, $params));
     }
 

@@ -36,6 +36,7 @@ $context->fromRequest($request);
 
 // Match the request URI to a route
 $matcher = new UrlMatcher($routes, $context);
+$response = null;
 
 try {
     // print_r($request->getPathInfo());
@@ -56,6 +57,7 @@ try {
 
     $controller = new $controllerClass($twig);
     $response = $controller->$method($request, ...array_values($parameters));
+    
 } catch (Symfony\Component\Routing\Exception\ResourceNotFoundException $e) {
     // Check if the URL starts with /api
     if ($requestFormat === 'json') {

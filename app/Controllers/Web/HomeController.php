@@ -11,6 +11,6 @@ use App\Controllers\BaseController;
 class HomeController extends BaseController {
     public function index(Request $request, string $name): Response
     {
-        return $this->render('home/index.twig', ['name' => $name]);
+        return $this->render('home.index', ['name' => $name]);
     }
 }
