@@ -12,8 +12,11 @@ use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 
 // Set up Twig
+$twigLoader = new \Twig\Loader\FilesystemLoader(__DIR__ . '/views');
+$twigLoader->addPath(__DIR__ . '/views/layouts');
+
 $twig = new Environment(
-    new FilesystemLoader(__DIR__ . '/views'),
+    $twigLoader,
     [
         'cache' => false,
         // 'cache' => __DIR__ . '/cache/twig' // for production
@@ -57,7 +60,7 @@ try {
 
     $controller = new $controllerClass($twig);
     $response = $controller->$method($request, ...array_values($parameters));
-    
+
 } catch (Symfony\Component\Routing\Exception\ResourceNotFoundException $e) {
     // Check if the URL starts with /api
     if ($requestFormat === 'json') {
