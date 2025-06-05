@@ -51,7 +51,14 @@ try {
 
     $requestFormat = $parameters['_format'] ?? 'html';
 
-    unset($parameters['_controller'], $parameters['_route'], $parameters['_format']); // cleanup
+    // Cleanup all '_key' parameters
+    foreach($parameters as $key => $value) {
+        if(str_starts_with($key, '_')) {
+            unset($parameters[ $key ]);
+        }
+    }
+
+    // unset($parameters['_controller'], $parameters['_route'], $parameters['_format']); // cleanup
 
     // print_r([$controllerClass, $method]);
 

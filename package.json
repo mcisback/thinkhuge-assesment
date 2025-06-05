@@ -1,0 +1,20 @@
+{
+  "name": "assesmenttest",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:scss": "sass assets/scss:public/assets/css",
+    "watch:scss": "sass --watch assets/scss:assets/css"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "sass": "^1.89.1"
+  },
+  "dependencies": {
+    "bootstrap": "^5.3.6"
+  }
+}
