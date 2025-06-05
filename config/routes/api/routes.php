@@ -8,7 +8,7 @@ use App\Routing\GetRoute;
 $webRoutes = new RouteCollection();
 
 $webRoutes->add(
-    'api_greet', 
+    'api.greet', 
     new GetRoute(
         '/greet/{name}',
         [

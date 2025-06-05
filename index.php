@@ -10,6 +10,8 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 require_once __DIR__ . '/bootstrap/dotenv.php';
 
+require_once __DIR__ . '/bootstrap/session.php';
+
 if (_env('APP_DEBUG') === true) {
     ini_set('display_errors', 1);
     error_reporting(E_ALL);
@@ -64,7 +66,7 @@ try {
 
     // print_r([$controllerClass, $method]);
 
-    $controller = new $controllerClass($twig);
+    $controller = new $controllerClass($request, $twig);
     $response = $controller->$method($request, ...array_values($parameters));
 
 } catch (Symfony\Component\Routing\Exception\ResourceNotFoundException $e) {

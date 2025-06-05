@@ -9,8 +9,8 @@ use Symfony\Component\HttpFoundation\Response;
 use App\Controllers\BaseController;
 
 class HomeController extends BaseController {
-    public function index(Request $request, string $name): Response
+    public function index(Request $request): Response
     {
-        return $this->render('home.index', ['name' => $name]);
+        return $this->render('home.index');
     }
 }

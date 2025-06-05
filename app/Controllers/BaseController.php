@@ -11,8 +11,10 @@ use \Twig\Environment as TwigEnv;
 abstract class BaseController {
     // abstract public function index(Request $request, ...$parameters): Response;
     protected TwigEnv $twig;
+    protected Request $request;
 
-    public function __construct(TwigEnv $twig) {
+    public function __construct(Request $request, TwigEnv $twig) {
+        $this->request = $request;
         $this->twig = $twig;
     }
 
@@ -24,7 +26,11 @@ abstract class BaseController {
             $template .= '.twig';
         }
 
-        return new Response($this->twig->render($template, $params));
+        return new Response($this->twig->render($template, [
+            ...$params,
+            'flash' => session()->getFlashBag()->all(),
+            'old' => $this->request->request->all(),
+        ]));
     }
 
     protected function json(array $data, int $status = 200): JsonResponse {

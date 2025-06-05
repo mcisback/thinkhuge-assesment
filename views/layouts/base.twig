@@ -8,10 +8,7 @@
 </head>
 <body>
     <header>
-        <h1>My Website</h1>
-        <nav>
-            <a href="/">Home</a>
-        </nav>
+        {% block nav %}{% endblock %}
     </header>
 
     <main>
@@ -21,7 +18,7 @@
     </main>
 
     <footer>
-        <p>&copy; 2025</p>
+        {% block footer %}{% endblock %}
     </footer>
 </body>
 </html>
