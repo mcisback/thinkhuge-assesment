@@ -21,22 +21,32 @@ All Time Reports
 </form>
 
 <div class="row">
-    <div class="col-md-6">
-        <h5>Balance</h5>
-        <p class="fs-4 fw-bold text-success">€ {{ report.balance|default('0.00') }}</p>
-    </div>
-    <div class="col-md-6">
-        <h5>Movements</h5>
-        <ul class="list-group">
-            {% for movement in report.movements %}
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                    {{ movement.label }}
-                    <span class="badge bg-secondary">{{ movement.amount }} €</span>
-                </li>
+    <h5>Balance</h5>
+    <p class="fs-4 fw-bold text-success">€ {{ report.balance|default('0.00') }}</p>
+</div>
+
+<div class="row">
+    <h5>Movements</h5>
+    <ul class="list-group">
+        {% for movement in report.movements %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+            <span class="badge bg-secondary">{{ movement.user.name }}</span>
+
+            {% if movement.type == 'deposit' %}
+                <span class="badge bg-warning">{{ movement.type }}</span>
+                <span class="badge bg-info">+{{ movement.amount }} €</span>
+            {% elseif movement.type == 'earning' %}
+                <span class="badge bg-success">{{ movement.type }}</span>
+                <span class="badge bg-info">+{{ movement.amount }} €</span>
             {% else %}
-                <li class="list-group-item">No movements found.</li>
-            {% endfor %}
-        </ul>
-    </div>
+                <span class="badge bg-danger">{{ movement.type }}</span>
+                <span class="badge bg-info">-{{ movement.amount }} €</span>
+            {% endif %}
+
+            </li>
+        {% else %}
+            <li class="list-group-item">No movements found.</li>
+        {% endfor %}
+    </ul>
 </div>
 {% endblock %}

@@ -9,6 +9,6 @@ class Movement extends Model {
     protected $fillable = ['type', 'amount', 'user_id'];
 
     public function user() {
-        return $this->belongsTo(App\Database\Models\User::class);
+        return $this->belongsTo(\App\Database\Models\User::class);
     }
 }

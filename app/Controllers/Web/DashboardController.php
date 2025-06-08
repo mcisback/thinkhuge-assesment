@@ -9,17 +9,33 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 
 use App\Controllers\BaseController;
 use App\Database\Models\User;
+use App\Database\Models\Movement;
 
 class DashboardController extends BaseController {
     public function index(Request $request): Response
     {
+        $movements = Movement::with(['user:id,name'])->get();
+
+        $balance = 0;
+
+        $movements = $movements->map(function ($mov) use(&$balance) {
+            $mov->amount = $mov->amount / 100;
+
+            $sign = 1;
+
+            if($mov->type === 'expense') {
+                $sign = -1;
+            }
+
+            $balance += ($mov->amount * $sign);
+
+            return $mov;
+        });
+
         return $this->render('dashboard.index', [
             'report' => [
-                'balance' => 1250.00,
-                'movements' => [
-                    ['label' => 'Deposit', 'amount' => 1000],
-                    ['label' => 'Purchase', 'amount' => -250],
-                ],
+                'balance' => $balance,
+                'movements' => $movements,
             ]
         ]);
     }

@@ -9,12 +9,12 @@ Clients Managements
 {% block content %}
 <form class="mb-3 row g-3 w-100">
     <div class="col-md-2 d-flex align-items-end justify-content-end w-100">
-        <button class="btn btn-outline-primary" type="submit">Add Client</button>
+        <button class="btn btn-outline-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasAddClient" aria-controls="offcanvasAddClient">Add Client</button>
     </div>
 </form>
 
 <div class="row">
-    <table class="table table-bordered table-striped">
+    <table class="table table-bordered table-striped table-hover">
         <thead class="table-dark">
             <tr>
                 <th>#</th>
@@ -25,7 +25,7 @@ Clients Managements
         </thead>
         <tbody>
             {% for client in clients %}
-                <tr>
+                <tr style="cursor: pointer;">
                     <td>{{ client.id }}</td>
                     <td>{{ client.name }}</td>
                     <td>{{ client.email }}</td>
@@ -40,11 +40,9 @@ Clients Managements
     </table>
 </div>
 
-<button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Toggle right offcanvas</button>
-
-<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasAddClient" aria-labelledby="offcanvasAddClientLabel">
   <div class="offcanvas-header">
-    <h5 id="offcanvasRightLabel">Create Client</h5>
+    <h5 id="offcanvasAddClientLabel">Create Client</h5>
     <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
   </div>
   <div class="offcanvas-body">
@@ -79,6 +77,11 @@ Clients Managements
             <div class="mb-3">
                 <label for="password" class="form-label">Password</label>
                 <input type="password" name="password" id="password" class="form-control" required>
+            </div>
+
+            <div class="mb-3 form-check" style="cursor: pointer;">
+                <input type="checkbox" name="allow_login" id="allow_login" class="form-check-input" value="0">
+                <label for="allow_login" class="form-check-label">Allow Login</label>
             </div>
 
             <button type="submit" class="btn btn-primary">Create Client</button>
