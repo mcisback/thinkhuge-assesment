@@ -14,5 +14,7 @@ class DatabaseSeeder
 
         (new UserSeeder())->run();
         (new MovementSeeder())->run();
+
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 }

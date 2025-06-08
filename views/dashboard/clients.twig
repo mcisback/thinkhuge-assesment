@@ -39,4 +39,51 @@ Clients Managements
         </tbody>
     </table>
 </div>
+
+<button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Toggle right offcanvas</button>
+
+<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+  <div class="offcanvas-header">
+    <h5 id="offcanvasRightLabel">Create Client</h5>
+    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+    <div class="container">
+        {# Flash errors or success #}
+        {% if flash.error %}
+            <div class="alert alert-danger">{{ flash.error[0] }}</div>
+        {% endif %}
+        {% if flash.success %}
+            <div class="alert alert-success">{{ flash.success[0] }}</div>
+        {% endif %}
+
+        <form method="POST" action="/users/store">
+            <div class="mb-3">
+                <label for="name" class="form-label">Name</label>
+                <input type="text" name="name" id="name" class="form-control" required value="{{ old.name|default('') }}">
+            </div>
+
+            {# <div class="mb-3">
+                <label for="role" class="form-label">Role</label>
+                <select name="role" id="role" class="form-select">
+                    <option value="client" {% if old.role == 'client' %}selected{% endif %}>Client</option>
+                    <option value="admin" {% if old.role == 'admin' %}selected{% endif %}>Admin</option>
+                </select>
+            </div> #}
+
+            <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" name="email" id="email" class="form-control" required value="{{ old.email|default('') }}">
+            </div>
+
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" name="password" id="password" class="form-control" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Create Client</button>
+        </form>
+    </div>
+  </div>
+</div>
 {% endblock %}

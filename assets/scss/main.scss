@@ -1,6 +1,9 @@
 // Import bootstrap
 @import "../../node_modules/bootstrap/scss/bootstrap";
 
+.offcanvas {
+    z-index: 2000 !important;
+}
 
 body {
   font-family: sans-serif;

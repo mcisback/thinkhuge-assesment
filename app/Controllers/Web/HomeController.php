@@ -12,12 +12,6 @@ use App\Controllers\BaseController;
 class HomeController extends BaseController {
     public function index(Request $request): Response
     {
-        if(session()->get('auth')) {
-            return new RedirectResponse('/dashboard');
-        }
-
-        // print_r('HERE');
-
         return $this->render('home.index');
     }
 }

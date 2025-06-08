@@ -19,6 +19,8 @@ DB::schema()->create('users', function ($table) {
 
        $table->string('password');
 
+       $table->boolean('allow_login')->default(false);
+
     //    $table->string('userimage')->nullable();
 
        $table->string('api_key')->nullable()->unique();

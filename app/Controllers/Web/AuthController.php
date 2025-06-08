@@ -28,6 +28,20 @@ class AuthController extends BaseController {
             return new RedirectResponse('/');
         }
 
+        if(!$user->allow_login) {
+            // Optionally add flash message
+            session()->getFlashBag()->add('error', 'Not Authorized');
+
+            return new RedirectResponse('/');
+        }
+
+        if($user->role !== 'admin') {
+            // Optionally add flash message
+            session()->getFlashBag()->add('error', 'Only Admins Can Login');
+
+            return new RedirectResponse('/');
+        }
+
         // Log the user in (store in session)
         session()->set('auth', $user->id);
 

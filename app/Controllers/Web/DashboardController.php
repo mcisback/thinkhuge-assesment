@@ -13,10 +13,6 @@ use App\Database\Models\User;
 class DashboardController extends BaseController {
     public function index(Request $request): Response
     {
-        if(!session()->get('auth')) {
-            return new RedirectResponse('/');
-        }
-
         return $this->render('dashboard.index', [
             'report' => [
                 'balance' => 1250.00,
@@ -29,10 +25,6 @@ class DashboardController extends BaseController {
     }
 
     public function clientsPage(Request $request) : Response {
-        if(!session()->get('auth')) {
-            return new RedirectResponse('/');
-        }
-
         $clients = User::clients();
 
         return $this->render('dashboard.clients', [

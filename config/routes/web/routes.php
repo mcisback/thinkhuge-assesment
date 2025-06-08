@@ -26,6 +26,7 @@ $webRoutes->add(
         '/dashboard',
         [
             '_controller' => [App\Controllers\Web\DashboardController::class, 'index'],
+            '_middlewares' => ['auth'],
         ],
     )
 );
@@ -36,6 +37,7 @@ $webRoutes->add(
         '/dashboard/clients',
         [
             '_controller' => [App\Controllers\Web\DashboardController::class, 'clientsPage'],
+            '_middlewares' => ['auth'],
         ],
     )
 );

@@ -56,14 +56,32 @@ try {
 
     $requestFormat = $parameters['_format'] ?? 'html';
 
+    $middlewareMap = require __DIR__ . '/config/middlewares.php';
+    $middlewares = $parameters['_middlewares'] ?? [];
+
+    foreach ($middlewares as $alias) {
+        if (!isset($middlewareMap[$alias])) {
+            throw new Exception("Middleware [$alias] not found.");
+        }
+
+        $middlewareClass = $middlewareMap[$alias];
+        $middleware = new $middlewareClass();
+
+        $response = $middleware->handle($request);
+
+        if ($response instanceof Response) {
+            $response->send();
+
+            exit;
+        }
+    }
+
     // Cleanup all '_key' parameters
     foreach($parameters as $key => $value) {
         if(str_starts_with($key, '_')) {
             unset($parameters[ $key ]);
         }
     }
-
-    // unset($parameters['_controller'], $parameters['_route'], $parameters['_format']); // cleanup
 
     // print_r([$controllerClass, $method]);
 

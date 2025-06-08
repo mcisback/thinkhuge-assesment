@@ -11854,6 +11854,10 @@ textarea.form-control-lg {
     display: none !important;
   }
 }
+.offcanvas {
+  z-index: 2000 !important;
+}
+
 body {
   font-family: sans-serif;
   background-color: #f5f5f5;
