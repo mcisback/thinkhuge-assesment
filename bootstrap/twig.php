@@ -28,8 +28,8 @@ $twig->addFunction(new TwigFunction('assets', function ($path) {
     return rtrim(config('app.assets') ?? '', '/') . '/' . ltrim($path, '/');
 }));
 
-$twig->addFunction(new TwigFunction('csrfToken', function ($tokenId) {
-    return csrfToken($tokenId);
-}));
+$twig->addFunction(new TwigFunction('csrfToken', function ($tokenId='') {
+    return sprintf('<input type="hidden" name="_csrf_token" value="%s">', csrfToken($tokenId));
+}, ['is_safe' => ['html']]));
 
 return $twig;

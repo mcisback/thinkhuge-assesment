@@ -58,6 +58,8 @@ try {
 
     $requestFormat = $parameters['_format'] ?? 'html';
 
+    $request->attributes->set('_format', $requestFormat);
+
     $middlewares = $parameters['_middlewares'] ?? [];
 
     foreach ($middlewares as $alias) {

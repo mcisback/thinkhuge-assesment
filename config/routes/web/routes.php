@@ -49,6 +49,7 @@ $webRoutes->add(
         '/login',
         [
             '_controller' => [App\Controllers\Web\AuthController::class, 'login'],
+            '_middlewares' => ['csrf'],
         ],
     )
 );
