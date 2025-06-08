@@ -7,12 +7,14 @@ use App\Routing\GetRoute;
 
 $apiRoutes = new RouteCollection();
 
+// Clients
 $apiRoutes->add(
-    'api.greet', 
+    'api.clients.movements', 
     new GetRoute(
-        '/greet/{name}',
+        '/clients/{id}',
         [
-            '_controller' => [App\Controllers\Api\ApiController::class, 'index'],
+            '_controller' => [App\Controllers\Api\ClientController::class, 'index'],
+            '_middlewares' => ['apiAuth'],
         ],
     )
 );

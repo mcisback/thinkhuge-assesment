@@ -5,20 +5,33 @@ Client Report: {{ client.name }}
 {% endblock %}
 
 {% block content %}
-<form method="GET" action="/dashboard#report" class="mb-3 row g-3">
-    <div class="col-md-5">
-        <label for="range" class="form-label">Range</label>
-        <select class="form-select" name="range" id="range">
-            <option value="all">All</option>
-            <option value="today">Today</option>
-            <option value="week">This Week</option>
-            <option value="month">This Month</option>
-        </select>
+<div class="row">
+
+    <div class="col">
+        <form method="GET" action="/dashboard#report" class="mb-3 g-3">
+            <div class="col-md-5">
+                <label for="range" class="form-label">Range</label>
+                <select class="form-select" name="range" id="range">
+                    <option value="all">All</option>
+                    <option value="today">Today</option>
+                    <option value="week">This Week</option>
+                    <option value="month">This Month</option>
+                </select>
+            </div>
+            <div class="col-md-2 d-flex align-items-end">
+                <button class="btn btn-outline-primary w-100" type="submit">Apply</button>
+            </div>
+        </form>
     </div>
-    <div class="col-md-2 d-flex align-items-end">
-        <button class="btn btn-outline-primary w-100" type="submit">Apply</button>
+
+    <div class="col-4">
+        <form method="POST" action="/movements/create" class="mb-3 g-3">
+            <div class=" d-flex align-items-end">
+                <button class="btn btn-outline-primary w-100" type="submit">Add Movement</button>
+            </div>
+        </form>
     </div>
-</form>
+</div>
 
 <div class="row">
     <h5>Balance</h5>

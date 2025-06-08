@@ -17,7 +17,7 @@ abstract class BaseController {
     public function __construct(Request $request, TwigEnv $twig) {
         $this->request = $request;
         $this->twig = $twig;
-        $this->referer = $request->headers->get('referer');
+        $this->referer = $request->headers->get('referer') ?? '';
     }
 
     protected function render(string $template, array $params = []): Response {

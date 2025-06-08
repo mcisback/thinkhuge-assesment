@@ -34,7 +34,8 @@ class UserSeeder
                 'email' => 'admin@example.com',
                 'role' => 'admin',
                 'password' => $password,
-                'allow_login' => true
+                'allow_login' => true,
+                'api_key' => '286e72e79a69a3165bf913426c25221d51597349cd94fc2865b99fda050c2950',
             ],
         ];
 
