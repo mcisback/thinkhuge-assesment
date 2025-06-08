@@ -1,5 +1,8 @@
 # README
 
+The framework in this app i wrote it entirely by myself from scratch
+using Symfony components and Eloquent ORM.
+
 ## REQUIREMENTS
 
 - PHP 8.2

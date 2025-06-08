@@ -37,7 +37,7 @@ class ApiAuthMiddleware implements MiddlewareInterface
             ], 403);
         }
 
-        session()->set('user', $user);
+        // session()->set('user', $user);
 
         return null; // Continue to controller
     }
