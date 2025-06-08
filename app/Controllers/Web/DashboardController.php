@@ -41,7 +41,11 @@ class DashboardController extends BaseController {
     }
 
     public function clientsPage(Request $request) : Response {
-        $clients = User::clients();
+        $clients = User::clients()->map(function($client) {
+            $client->balance = $client->balance() / 100;
+
+            return $client;
+        });
 
         return $this->render('dashboard.clients', [
             'clients' => $clients,

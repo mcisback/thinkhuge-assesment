@@ -12,10 +12,12 @@ abstract class BaseController {
     // abstract public function index(Request $request, ...$parameters): Response;
     protected TwigEnv $twig;
     protected Request $request;
+    protected string $referer = '';
 
     public function __construct(Request $request, TwigEnv $twig) {
         $this->request = $request;
         $this->twig = $twig;
+        $this->referer = $request->headers->get('referer');
     }
 
     protected function render(string $template, array $params = []): Response {

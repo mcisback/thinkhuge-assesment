@@ -5,6 +5,7 @@ use Symfony\Component\Routing\RouteCollection;
 
 use App\Routing\GetRoute;
 use App\Routing\PostRoute;
+use App\Routing\DeleteRoute;
 
 $webRoutes = new RouteCollection();
 
@@ -60,6 +61,40 @@ $webRoutes->add(
         '/logout',
         [
             '_controller' => [App\Controllers\Web\AuthController::class, 'logout'],
+        ],
+    )
+);
+
+// Clients
+$webRoutes->add(
+    'web.clients.create', 
+    new PostRoute(
+        '/clients/create',
+        [
+            '_controller' => [App\Controllers\Web\ClientController::class, 'create'],
+            '_middlewares' => ['auth', 'csrf'],
+        ],
+    )
+);
+
+$webRoutes->add(
+    'web.clients.show', 
+    new GetRoute(
+        '/clients/{id}',
+        [
+            '_controller' => [App\Controllers\Web\ClientController::class, 'show'],
+            '_middlewares' => ['auth'],
+        ],
+    )
+);
+
+$webRoutes->add(
+    'web.clients.delete', 
+    new DeleteRoute(
+        '/clients/{id}',
+        [
+            '_controller' => [App\Controllers\Web\ClientController::class, 'delete'],
+            '_middlewares' => ['auth'],
         ],
     )
 );

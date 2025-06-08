@@ -24,6 +24,11 @@ $twig = require_once __DIR__ . '/bootstrap/twig.php';
 
 $request = Request::createFromGlobals();
 
+// Override HTTP method if _method is set and current is POST
+if ($request->getMethod() === 'POST' && $request->request->has('_method')) {
+    $request->setMethod( strtoupper( $request->request->get('_method') ) );
+}
+
 // Load the route collection
 $routes = require __DIR__ . '/config/routes.php';
 

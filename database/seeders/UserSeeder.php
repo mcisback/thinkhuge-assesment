@@ -11,7 +11,7 @@ class UserSeeder
         
         User::truncate(); // Optional: clear table before seeding
 
-        $password = password_hash('password', PASSWORD_ARGON2ID);
+        $password = my_password_hash('password');
 
         $users = [
             [
@@ -33,12 +33,13 @@ class UserSeeder
                 'name' => 'Admin',
                 'email' => 'admin@example.com',
                 'role' => 'admin',
-                'password' => $password, 'allow_login' => true
+                'password' => $password,
+                'allow_login' => true
             ],
         ];
 
         foreach ($users as $data) {
-            // $data['password'] = password_hash('password', PASSWORD_ARGON2ID);
+            // $data['password'] = my_password_hash('password');
 
             print_r($data);
 

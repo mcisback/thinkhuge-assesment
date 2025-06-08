@@ -7,6 +7,16 @@ Clients Managements
 {% endblock %}
 
 {% block content %}
+<div class="row">
+    {# Flash errors or success #}
+    {% if flash.error %}
+        <div class="alert alert-danger">{{ flash.error[0] }}</div>
+    {% endif %}
+    {% if flash.success %}
+        <div class="alert alert-success">{{ flash.success[0] }}</div>
+    {% endif %}
+</div>
+
 <form class="mb-3 row g-3 w-100">
     <div class="col-md-2 d-flex align-items-end justify-content-end w-100">
         <button class="btn btn-outline-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasAddClient" aria-controls="offcanvasAddClient">Add Client</button>
@@ -19,8 +29,10 @@ Clients Managements
             <tr>
                 <th>#</th>
                 <th>Name</th>
+                <th>Balance</th>
                 <th>Email</th>
                 <th>Registered At</th>
+                <th>#</th>
             </tr>
         </thead>
         <tbody>
@@ -28,8 +40,28 @@ Clients Managements
                 <tr style="cursor: pointer;">
                     <td>{{ client.id }}</td>
                     <td>{{ client.name }}</td>
+                    <td>
+                        {% if client.balance >= 0 %}
+                            <span class="badge bg-success">+{{ client.balance }}</span>
+                        {% else %}
+                            <span class="badge bg-danger">{{ client.balance }}</span>
+                        {% endif %}
+                    </td>
                     <td>{{ client.email }}</td>
                     <td>{{ client.created_at|date('Y-m-d H:i') }}</td>
+                    <td class="flex">
+                        <form method="POST" action="/clients/{{ client.id }}">
+                            {{ httpMethod('DELETE') }}
+
+                            <button type="submit" class="btn btn-danger btn-sm">
+                                <i class="bi bi-trash"></i> Delete
+                            </button>
+                        </form>
+
+                        <a href="/clients/{{ client.id }}" class="btn btn-info btn-sm">
+                            <i class="bi bi-user"></i> Show
+                        </a>
+                    </td>
                 </tr>
             {% else %}
                 <tr>
@@ -47,15 +79,7 @@ Clients Managements
   </div>
   <div class="offcanvas-body">
     <div class="container">
-        {# Flash errors or success #}
-        {% if flash.error %}
-            <div class="alert alert-danger">{{ flash.error[0] }}</div>
-        {% endif %}
-        {% if flash.success %}
-            <div class="alert alert-success">{{ flash.success[0] }}</div>
-        {% endif %}
-
-        <form method="POST" action="/users/store">
+        <form method="POST" action="/clients/create">
             <div class="mb-3">
                 <label for="name" class="form-label">Name</label>
                 <input type="text" name="name" id="name" class="form-control" required value="{{ old.name|default('') }}">
@@ -79,10 +103,17 @@ Clients Managements
                 <input type="password" name="password" id="password" class="form-control" required>
             </div>
 
+            <div class="mb-3">
+                <label for="deposit" class="form-label">Initial Deposit</label>
+                <input type="number" name="deposit" id="deposit" class="form-control" value="0.00" step="0.01">
+            </div>
+
             <div class="mb-3 form-check" style="cursor: pointer;">
                 <input type="checkbox" name="allow_login" id="allow_login" class="form-check-input" value="0">
                 <label for="allow_login" class="form-check-label">Allow Login</label>
             </div>
+
+            {{ csrfToken('create_client_form') }}
 
             <button type="submit" class="btn btn-primary">Create Client</button>
         </form>

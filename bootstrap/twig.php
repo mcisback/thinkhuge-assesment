@@ -32,4 +32,8 @@ $twig->addFunction(new TwigFunction('csrfToken', function ($tokenId='') {
     return sprintf('<input type="hidden" name="_csrf_token" value="%s">', csrfToken($tokenId));
 }, ['is_safe' => ['html']]));
 
+$twig->addFunction(new TwigFunction('httpMethod', function ($method) {
+    return sprintf('<input type="hidden" name="_method" value="%s">', $method);
+}, ['is_safe' => ['html']]));
+
 return $twig;
