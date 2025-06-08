@@ -28,4 +28,8 @@ $twig->addFunction(new TwigFunction('assets', function ($path) {
     return rtrim(config('app.assets') ?? '', '/') . '/' . ltrim($path, '/');
 }));
 
+$twig->addFunction(new TwigFunction('csrfToken', function ($tokenId) {
+    return csrfToken($tokenId);
+}));
+
 return $twig;
