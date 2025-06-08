@@ -41,6 +41,8 @@ $matcher = new UrlMatcher($routes, $context);
 $response = null;
 $requestFormat = 'html';
 
+$middlewareMap = require __DIR__ . '/config/middlewares.php';
+
 try {
     // print_r($request->getPathInfo());
     // echo "\n";
@@ -56,7 +58,6 @@ try {
 
     $requestFormat = $parameters['_format'] ?? 'html';
 
-    $middlewareMap = require __DIR__ . '/config/middlewares.php';
     $middlewares = $parameters['_middlewares'] ?? [];
 
     foreach ($middlewares as $alias) {
