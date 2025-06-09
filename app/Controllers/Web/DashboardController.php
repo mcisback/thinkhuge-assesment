@@ -14,7 +14,18 @@ use App\Database\Models\Movement;
 class DashboardController extends BaseController {
     public function index(Request $request): Response
     {
-        $movements = Movement::with(['user:id,name'])->get();
+        if($request->query->has('range') && $request->query->get('range') !== 'all' ) {
+            $from = $request->query->get('from');
+            $to = $request->query->get('to');
+
+            $movements = Movement::with(['user:id,name'])
+                ->when($from && $to, function ($query) use ($from, $to) {
+                    $query->whereBetween('created_at', [$from, $to]);
+                })
+                ->get();
+        } else {
+            $movements = Movement::with(['user:id,name'])->get();
+        }
 
         $balance = 0;
 

@@ -14,8 +14,10 @@
         </div>
 
         <div class="col-md-9">
+            {% block dashboardHeader %}
             <h2 class="mb-4">Dashboard</h2>
             <p>Welcome to your dashboard.</p>
+            {% endblock %}
 
             <div class="card mb-4">
                 <div class="card-header bg-primary text-white">{% block contentTitle %}{% endblock %}</div>

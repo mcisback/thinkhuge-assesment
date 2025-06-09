@@ -53,7 +53,19 @@ class ClientController extends BaseController {
     public function show(Request $request, int $userId): Response {
         try {
 
-            $client = User::with('movements')->findOrFail($userId);
+            if($request->query->has('range') && $request->query->get('range') !== 'all') {
+                $from = $request->query->get('from');
+                $to = $request->query->get('to');
+
+                $client = User::with(['movements' => function ($query) use ($from, $to) {
+                    if ($from && $to) {
+                        $query->whereBetween('created_at', [$from, $to]);
+                    }
+                }])->findOrFail($userId);
+            } else {
+                $client = User::with('movements')->findOrFail($userId);
+            }
+
             $client->balance = $client->balance() / 100;
 
             return $this->render('dashboard.client-report', [

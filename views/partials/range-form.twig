@@ -1,0 +1,77 @@
+<form method="GET" action="{{ app.request.pathInfo }}" class="row mb-3 g-3" id="range-form">
+    <div class="col-md-5">
+        <label for="range" class="form-label">Range XXX</label>
+        <select class="form-select" name="range" id="range">
+            <option value="all" {% if app.request.query.get('range') == 'all' %} selected {% endif %}>All</option>
+            <option value="today" {% if app.request.query.get('range') == 'today' %} selected {% endif %}>Today</option>
+            <option value="week" {% if app.request.query.get('range') == 'week' %} selected {% endif %}>This Week</option>
+            <option value="month" {% if app.request.query.get('range') == 'month' %} selected {% endif %}>This Month</option>
+            <option value="custom" {% if app.request.query.get('range') == 'custom' %} selected {% endif %}>Custom</option>
+        </select>
+    </div>
+
+    <div class="col-md-3">
+        <label for="from" class="form-label">From</label>
+        <input type="date" class="form-control" name="from" id="from" disabled>
+    </div>
+
+    <div class="col-md-3">
+        <label for="to" class="form-label">To</label>
+        <input type="date" class="form-control" name="to" id="to" disabled>
+    </div>
+
+    <div class="row d-flex align-items-end">
+        <button class="btn btn-outline-primary w-100" type="submit">Apply</button>
+    </div>
+</form>
+
+{% block scripts %}
+<script>
+document.getElementById('range').addEventListener('change', function () {
+    const range = this.value;
+    const fromInput = document.getElementById('from');
+    const toInput = document.getElementById('to');
+
+    const today = new Date();
+    const toISO = d => d.toISOString().split('T')[0];
+
+    let from = '';
+    let to = '';
+
+    fromInput.disabled = true;
+    toInput.disabled = true;
+
+    if (range === 'custom') {
+        fromInput.disabled = false;
+        toInput.disabled = false;
+        fromInput.value = '';
+        toInput.value = '';
+        return;
+    }
+
+    if (range === 'today') {
+        from = to = toISO(today);
+    } else if (range === 'week') {
+        const first = today.getDate() - today.getDay() + 1; // Monday
+        const last = first + 6;
+        const monday = new Date(today.setDate(first));
+        const sunday = new Date(today.setDate(last));
+        from = toISO(monday);
+        to = toISO(sunday);
+    } else if (range === 'month') {
+        const firstDay = new Date(today.getFullYear(), today.getMonth(), 1);
+        const lastDay = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+        from = toISO(firstDay);
+        to = toISO(lastDay);
+    }
+
+    if (range !== 'all') {
+        fromInput.value = from;
+        toInput.value = to;
+        fromInput.disabled = false;
+        toInput.disabled = false;
+    }
+});
+</script>
+
+{% endblock %}

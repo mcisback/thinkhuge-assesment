@@ -7,6 +7,7 @@ use Twig\TwigFunction;
 // Set up Twig
 $twigLoader = new \Twig\Loader\FilesystemLoader(__DIR__ . '/../views');
 $twigLoader->addPath(__DIR__ . '/../views/layouts');
+$twigLoader->addPath(__DIR__ . '/../views/partials');
 
 $twig = new Environment(
     $twigLoader,
