@@ -99,4 +99,16 @@ $webRoutes->add(
     )
 );
 
+// Movements
+$webRoutes->add(
+    'web.movements.create', 
+    new PostRoute(
+        '/movements/create',
+        [
+            '_controller' => [App\Controllers\Web\MovementController::class, 'create'],
+            '_middlewares' => ['auth', 'csrf'],
+        ],
+    )
+);
+
 return $webRoutes;

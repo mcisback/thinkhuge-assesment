@@ -25,11 +25,9 @@ Client Report: {{ client.name }}
     </div>
 
     <div class="col-4">
-        <form method="POST" action="/movements/create" class="mb-3 g-3">
-            <div class=" d-flex align-items-end">
-                <button class="btn btn-outline-primary w-100" type="submit">Add Movement</button>
-            </div>
-        </form>
+        <div class=" d-flex align-items-end">
+            <button class="btn btn-outline-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasAddMovement" aria-controls="offcanvasAddMovement">Add Movement</button>
+        </div>
     </div>
 </div>
 
@@ -54,10 +52,44 @@ Client Report: {{ client.name }}
                 <span class="badge bg-info">-{{ movement.amount / 100 }} €</span>
             {% endif %}
 
+
+
             </li>
         {% else %}
             <li class="list-group-item">No movements found.</li>
         {% endfor %}
     </ul>
+</div>
+
+<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasAddMovement" aria-labelledby="offcanvasAddMovementLabel">
+  <div class="offcanvas-header">
+    <h5 id="offcanvasAddMovementLabel">Create Movement</h5>
+    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+    <div class="container">
+        <form method="POST" action="/movements/create">
+            <div class="mb-3">
+                <label for="type" class="form-label">Type</label>
+                <select name="type" id="type" class="form-select">
+                    <option value="deposit" {% if old.type == 'deposit' %}selected{% endif %}>Deposit</option>
+                    <option value="earning" {% if old.type == 'earning' %}selected{% endif %}>Earning</option>
+                    <option value="expense" {% if old.type == 'expense' %}selected{% endif %}>Expense</option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label for="amount" class="form-label">Amount</label>
+                <input type="number" name="amount" id="amount" class="form-control" value="0.00" step="0.01">
+            </div>
+
+            {{ csrfToken('create_movement_form') }}
+
+            <input type="hidden" name="user_id" value="{{ client.id }}">
+
+            <button type="submit" class="btn btn-primary">Create Movement</button>
+        </form>
+    </div>
+  </div>
 </div>
 {% endblock %}

@@ -23,7 +23,7 @@ class ClientController extends BaseController {
 
             Movement::create([
                 'type' => 'deposit',
-                'amount' => intval(str_replace('.', '', $data['deposit'])),
+                'amount' => intval( floatval($data['deposit']) * 100 ),
                 'user_id' => $user->id,
             ]);
 
