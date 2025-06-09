@@ -41,18 +41,28 @@ Client Report: {{ client.name }}
     <ul class="list-group">
         {% for movement in movements %}
             <li class="list-group-item d-flex justify-content-between align-items-center">
-            {% if movement.type == 'deposit' %}
-                <span class="badge bg-warning">{{ movement.type }}</span>
-                <span class="badge bg-info">+{{ movement.amount / 100 }} €</span>
-            {% elseif movement.type == 'earning' %}
-                <span class="badge bg-success">{{ movement.type }}</span>
-                <span class="badge bg-info">+{{ movement.amount / 100 }} €</span>
-            {% else %}
-                <span class="badge bg-danger">{{ movement.type }}</span>
-                <span class="badge bg-info">-{{ movement.amount / 100 }} €</span>
-            {% endif %}
+                <div class="d-flex justify-content-between align-items-center w-75">
+                    {% if movement.type == 'deposit' %}
+                        <span class="badge bg-warning">{{ movement.type }}</span>
+                        <span class="badge bg-info">+{{ movement.amount / 100 }} €</span>
+                    {% elseif movement.type == 'earning' %}
+                        <span class="badge bg-success">{{ movement.type }}</span>
+                        <span class="badge bg-info">+{{ movement.amount / 100 }} €</span>
+                    {% else %}
+                        <span class="badge bg-danger">{{ movement.type }}</span>
+                        <span class="badge bg-info">-{{ movement.amount / 100 }} €</span>
+                    {% endif %}
+                </div>
 
+                <div>
+                    <form method="POST" action="/movements/{{ movement.id }}">
+                        {{ httpMethod('DELETE') }}
 
+                        <button type="submit" class="btn btn-danger btn-sm">
+                            <i class="bi bi-trash"></i> Delete
+                        </button>
+                    </form>
+                </div>
 
             </li>
         {% else %}

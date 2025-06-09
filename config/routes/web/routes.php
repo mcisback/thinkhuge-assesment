@@ -111,4 +111,15 @@ $webRoutes->add(
     )
 );
 
+$webRoutes->add(
+    'web.movements.delete', 
+    new DeleteRoute(
+        '/movements/{id}',
+        [
+            '_controller' => [App\Controllers\Web\MovementController::class, 'delete'],
+            '_middlewares' => ['auth'],
+        ],
+    )
+);
+
 return $webRoutes;
